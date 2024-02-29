@@ -3,6 +3,9 @@ package com.mra;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class Main {
@@ -18,6 +21,12 @@ public class Main {
                 "Manager"
         );
 
+        Integer salaryIncreaseStaff = 10;
+
+        Integer salaryIncreaseSupervisor = 8;
+
+        Integer salaryIncreaseManager = 12;
+
 
 
         //Nama
@@ -30,9 +39,16 @@ public class Main {
             try {
                 System.out.println("Tanggal berapa karyawan mulai bekerja? (format : dd/MM/yyyy)");
                 String inputStart = scanner.nextLine();
-                Calculation calculation = new Calculation();
-                String inputStartChecked = calculation.checkingStartDate(inputStart);
-                startWork = formatTanggal.parse(inputStartChecked);
+                String[] tanggal = inputStart.split("/");
+
+                int day = Integer.parseInt(tanggal[0]);
+                int month = Integer.parseInt(tanggal[1]);
+                int year = Integer.parseInt(tanggal[2]);
+
+                if (day == 29 && month == 2) {
+                    inputStart = "28" + "/" + month + "/" + year;
+                }
+                startWork = formatTanggal.parse(inputStart);
             }catch (Exception exception){
                 System.out.println("Format Tanggal Salah, coba lagi.");
             }
@@ -77,8 +93,35 @@ public class Main {
         }
 
         System.out.println(nama + " (" + employeeLevel + ")");
-        Calculation calculation = new Calculation();
-        List<Integer> salaryIncrease = calculation.calculationSalaryIncrease(firstSalary, employeeLevel, startWork, endWork);
+        List<Integer> salaryIncrease = new ArrayList<>();
+        LocalDate startLocalDate = startWork.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate endLocalDate = endWork.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        // Menghitung selisih tahun antara dua tanggal
+        long selisihBulan = ChronoUnit.MONTHS.between(startLocalDate.withDayOfMonth(1), endLocalDate.withDayOfMonth(1));
+
+        // Menghitung selisih tahun antara dua tanggal
+        long selisihTahun = selisihBulan / 12;
+
+        // Jika tanggal akhir lebih besar dari tanggal awal, tambahkan satu tahun
+        if (endLocalDate.isAfter(startLocalDate.plusMonths(selisihTahun * 12))) {
+            selisihTahun++;
+        }
+        Integer newSalary = null;
+        for (int i = 0; i < selisihTahun; i++) {
+            if (salaryIncrease.isEmpty()) {
+                salaryIncrease.add(firstSalary);
+            }else {
+                if (employeeLevel.equals(employeeLevelList.get(0))) {
+                    newSalary = salaryIncrease.getLast() + Math.round(salaryIncrease.getLast() * ((float) salaryIncreaseStaff / 100));
+                }else if (employeeLevel.equals(employeeLevelList.get(1))) {
+                    newSalary = salaryIncrease.getLast() + Math.round(salaryIncrease.getLast() * ((float) salaryIncreaseSupervisor / 100));
+                }else if (employeeLevel.equals(employeeLevelList.get(2))) {
+                    newSalary = salaryIncrease.getLast() + Math.round(salaryIncrease.getLast() * ((float) salaryIncreaseManager / 100));
+                }
+                salaryIncrease.add(newSalary);
+            }
+        }
         Integer yearWorking = 0;
         Integer lastSalary = salaryIncrease.getLast();
         for (Integer salary : salaryIncrease) {

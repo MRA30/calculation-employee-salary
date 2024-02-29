@@ -47,10 +47,16 @@ public class Calculation {
         LocalDate endLocalDate = endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
         // Menghitung selisih tahun antara dua tanggal
-        long selisihTahun = ChronoUnit.YEARS.between(startLocalDate, endLocalDate);
+        long selisihBulan = ChronoUnit.MONTHS.between(startLocalDate.withDayOfMonth(1), endLocalDate.withDayOfMonth(1));
 
-        // Membulatkan selisih tahun ke atas
-        return (int) Math.ceil(selisihTahun);
+        // Menghitung selisih tahun antara dua tanggal
+        long selisihTahun = selisihBulan / 12;
+
+        // Jika tanggal akhir lebih besar dari tanggal awal, tambahkan satu tahun
+        if (endLocalDate.isAfter(startLocalDate.plusMonths(selisihTahun * 12))) {
+            selisihTahun++;
+        }
+        return (int) selisihTahun;
     }
 
     public Integer calculateIncreaseSalary(Integer salary, String employeeLevel) {

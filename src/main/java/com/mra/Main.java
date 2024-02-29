@@ -35,13 +35,11 @@ public class Main {
                 System.out.println("Format Tanggal Salah, coba lagi.");
             }
         }
-        System.out.println(startWork);
-
         //Tanggal Karyawan Di PHK
         Date endWork = null;
         while (endWork == null) {
             try {
-                System.out.print("Tanggal berapa karyawan ini di PHK secara baik-baik? (dd/MM/yyyy): ");
+                System.out.println("Tanggal berapa karyawan ini di PHK secara baik-baik? (dd/MM/yyyy): ");
                 String input = scanner.nextLine();
                 endWork = formatTanggal.parse(input);
             } catch (Exception exception) {
@@ -52,7 +50,7 @@ public class Main {
         Integer firstSalary = null;
         while (firstSalary == null) {
             try {
-                System.out.print("Berapa gaji karyawan pertama kali dia bekerja?");
+                System.out.println("Berapa gaji karyawan pertama kali dia bekerja?");
                 String input = scanner.nextLine();
                 if (input.matches("[0-9]+") && !input.contains(".")) {
                     int jumlahUang = Integer.parseInt(input);
@@ -68,7 +66,7 @@ public class Main {
 
         String employeeLevel = null;
         while (employeeLevel == null) {
-            System.out.print("Apa level karyawan ini?");
+            System.out.println("Apa level karyawan ini?");
             String input = scanner.nextLine();
             if (!employeeLevelList.contains(input)) {
                 throw new Exception("level karyawan harus " + String.join(" atau ", employeeLevelList));

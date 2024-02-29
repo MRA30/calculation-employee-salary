@@ -30,8 +30,7 @@ public class Calculation {
         Integer newSalary;
         for (int i = 0; i < yearDifference; i++) {
             if (result.isEmpty()) {
-                newSalary = calculateIncreaseSalary(salary, employeeLevel);
-                result.add(newSalary);
+                result.add(salary);
             }else {
                 newSalary = calculateIncreaseSalary(result.get(result.size() - 1), employeeLevel);
                 result.add(newSalary);

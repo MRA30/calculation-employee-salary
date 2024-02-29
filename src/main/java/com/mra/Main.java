@@ -1,5 +1,6 @@
 package com.mra;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -8,7 +9,8 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         SimpleDateFormat formatTanggal = new SimpleDateFormat("dd/MM/yyyy");
-        NumberFormat formatterRupiah = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+        DecimalFormat formatterRupiah = (DecimalFormat) NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+        formatterRupiah.applyPattern("#,###");
 
         List<String> employeeLevelList = Arrays.asList(
                 "Staff",

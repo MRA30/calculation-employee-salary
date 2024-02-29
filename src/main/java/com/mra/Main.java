@@ -28,14 +28,13 @@ public class Main {
         Integer salaryIncreaseManager = 12;
 
 
-
         //Nama
         System.out.println("Siapa nama karyawan ini?");
         String nama = scanner.nextLine();
 
         //Tanggal Karyawan Mulai Bekerja
         Date startWork = null;
-        while (startWork == null){
+        while (startWork == null) {
             try {
                 System.out.println("Tanggal berapa karyawan mulai bekerja? (format : dd/MM/yyyy)");
                 String inputStart = scanner.nextLine();
@@ -49,7 +48,7 @@ public class Main {
                     inputStart = "28" + "/" + month + "/" + year;
                 }
                 startWork = formatTanggal.parse(inputStart);
-            }catch (Exception exception){
+            } catch (Exception exception) {
                 System.out.println("Format Tanggal Salah, coba lagi.");
             }
         }
@@ -70,14 +69,11 @@ public class Main {
             try {
                 System.out.println("Berapa gaji karyawan pertama kali dia bekerja?");
                 String input = scanner.nextLine();
-                if (input.matches("[0-9]+") && !input.contains(".")) {
-                    int jumlahUang = Integer.parseInt(input);
-                    System.out.println("Jumlah uang yang dimasukkan: " + jumlahUang);
-                } else {
+                if (!input.matches("[0-9]+") && input.contains(".")) {
                     throw new Exception("input harus bilangan bulat, tidak ada sen di dalam rupiah");
                 }
                 firstSalary = Integer.parseInt(input);
-            }catch (Exception exception) {
+            } catch (Exception exception) {
                 System.out.println("Input bukan angka.");
             }
         }
@@ -111,12 +107,12 @@ public class Main {
         for (int i = 0; i < selisihTahun; i++) {
             if (salaryIncrease.isEmpty()) {
                 salaryIncrease.add(firstSalary);
-            }else {
+            } else {
                 if (employeeLevel.equals(employeeLevelList.get(0))) {
                     newSalary = salaryIncrease.getLast() + Math.round(salaryIncrease.getLast() * ((float) salaryIncreaseStaff / 100));
-                }else if (employeeLevel.equals(employeeLevelList.get(1))) {
+                } else if (employeeLevel.equals(employeeLevelList.get(1))) {
                     newSalary = salaryIncrease.getLast() + Math.round(salaryIncrease.getLast() * ((float) salaryIncreaseSupervisor / 100));
-                }else if (employeeLevel.equals(employeeLevelList.get(2))) {
+                } else if (employeeLevel.equals(employeeLevelList.get(2))) {
                     newSalary = salaryIncrease.getLast() + Math.round(salaryIncrease.getLast() * ((float) salaryIncreaseManager / 100));
                 }
                 salaryIncrease.add(newSalary);

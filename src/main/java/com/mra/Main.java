@@ -21,11 +21,11 @@ public class Main {
                 "Manager"
         );
 
-        Integer salaryIncreaseStaff = 10;
+        int salaryIncreaseStaff = 10;
 
-        Integer salaryIncreaseSupervisor = 8;
+        int salaryIncreaseSupervisor = 8;
 
-        Integer salaryIncreaseManager = 12;
+        int salaryIncreaseManager = 12;
 
 
         //Nama
@@ -118,7 +118,7 @@ public class Main {
                 salaryIncrease.add(newSalary);
             }
         }
-        Integer yearWorking = 0;
+        int yearWorking = 0;
         Integer lastSalary = salaryIncrease.getLast();
         for (Integer salary : salaryIncrease) {
             String startDate = formatTanggal.format(startWork);
